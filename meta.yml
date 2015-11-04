@@ -1,0 +1,6 @@
+elems:
+  - src: elems/(hgrc)$
+    dst: ~/.<1>
+    only:
+      features:
+        - mercurial
