@@ -31,34 +31,38 @@
 #                                                                              │
 # ─────────────────────────────────────────────────────────────────────────────┤
 <% define_locals do
-  variable "mercurial.difftool.name", type: :string?
-  variable "mercurial.difftool.cmd",  type: :string?
-  variable "mercurial.difftool.opts", type: :list?, default: []
+  prefixed(:"hg.difftool.", as: :difftool_) do
+    variable :name, type: :string?
+    variable :cmd,  type: :string?
+    variable :opts, type: :list?, default: []
+  end
 
-  variable "mercurial.mergetool.name", type: :string?
-  variable "mercurial.mergetool.cmd",  type: :string?
-  variable "mercurial.mergetool.opts", type: :list?, default: []
+  prefixed(:"hg.mergetool.", as: :mergetool_) do
+    variable :name, type: :string?
+    variable :cmd,  type: :string?
+    variable :opts, type: :list?, default: []
+  end
 end -%>
 # ─────────────────────────────────────────────────────────────────────────────┘
 
 [extensions]
   hgext.extdiff =
 
-<% local?("mercurial.difftool.(name|cmd|opts)") do |name, cmd, opts| %>
+<% if local? :"difftool_(name|cmd|opts)" %>
 [extdiff]
-  cmd.<%=  name %> = <%= cmd  %>
-  opts.<%= name %> = <%= opts %>
+  cmd.<%= local! :difftool_name %> = <%= local! :difftool_cmd %>
+  opts.<%= local! :difftool_name %> = <%= local! :difftool_opts %>
 <% end -%>
 
 [ui]
-  <% local?("mercurial.mergetool.name") do |name| %>
-  merge = <%= name %>
+  <% if local? :mergetool_name %>
+  merge = <%= local! :mergetool_name %>
   <% end -%>
 
-<% local?("mercurial.mergetool.(name|cmd|opts)") do |name, cmd, opts| %>
+<% if local? :"mergetool_(name|cmd|opts)" %>
 [merge-tools]
-  cmd.<%=  name %> = <%= cmd  %>
-  opts.<%= name %> = <%= opts %>
+  cmd.<%= local! :mergetool_name %> = <%= local! :mergetool_cmd %>
+  opts.<%= local! :mergetool_name %> = <%= local! :mergetool_opts %>
 <% end -%>
 
 # vim: set filetype=eruby.conf :
