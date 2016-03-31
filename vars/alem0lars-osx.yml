@@ -1,12 +1,1 @@
-mercurial:
-  difftool:
-    name: ksdiff
-    cmd: /usr/local/bin/ksdiff
-    opts: --changeset --wait --filelist
-  mergetool:
-    name: Kaleidoscope
-    cmd: /usr/local/bin/ksdiff
-    opts: --merge --output $output --base $base -- $local $other
-    
-features:
-  - mercurial
+# => inherits: generic, with-kaleidoscope <= #

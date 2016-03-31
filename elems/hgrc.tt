@@ -1,52 +1,64 @@
-# ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━┓
-#                                                                              ┃
-# File informations:                                                           ┃
-# - Name:    elems/hgrc.tt                                                     ┃
-# - Summary: The global mercurial configuration.                               ┃
-# - Authors:                                                                   ┃
-#   - Alessandro Molari <molari.alessandro@gmail.com> (alem0lars)              ┃
-#                                                                              ┃
-# Project informations:                                                        ┃
-#   - Homepage:        https://github.com/alem0lars/configs-mercurial          ┃
-#   - Getting started: see README.md in the project root folder                ┃
-#                                                                              ┃
-# License: Apache v2.0 (see below)                                             ┃
-#                                                                              ┃
-# ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━┫
-#                                                                              ┃
-# Licensed to the Apache Software Foundation (ASF) under one more contributor  ┃
-# license agreements.  See the NOTICE file distributed with this work for      ┃
-# additional information regarding copyright ownership. The ASF licenses this  ┃
-# file to you under the Apache License, Version 2.0 (the "License"); you may   ┃
-# not use this file except in compliance with the License.                     ┃
-# You may obtain a copy of the License at                                      ┃
-#                                                                              ┃
-#   http://www.apache.org/licenses/LICENSE-2.0                                 ┃
-#                                                                              ┃
-# Unless required by applicable law or agreed to in writing, software          ┃
-# distributed under the License is distributed on an "AS IS" BASIS, WITHOUT    ┃
-# WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.             ┃
-# See the License for the specific language governing permissions and          ┃
-# limitations under the License.                                               ┃
-#                                                                              ┃
-# ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━┛
+# ─────────────────────────────────────────────────────────────────────────────┐
+#                                                                              │
+# File informations:                                                           │
+# - Name:    elems/hgrc.tt                                                     │
+# - Summary: The global mercurial configuration.                               │
+# - Authors:                                                                   │
+#   - Alessandro Molari <molari.alessandro@gmail.com> (alem0lars)              │
+#                                                                              │
+# Project informations:                                                        │
+#   - Homepage:        https://github.com/alem0lars/configs-mercurial          │
+#   - Getting started: see README.md in the project root folder                │
+#                                                                              │
+# License: Apache v2.0 (see below)                                             │
+#                                                                              │
+# ─────────────────────────────────────────────────────────────────────────────┤
+#                                                                              │
+# Licensed to the Apache Software Foundation (ASF) under one more contributor  │
+# license agreements.  See the NOTICE file distributed with this work for      │
+# additional information regarding copyright ownership. The ASF licenses this  │
+# file to you under the Apache License, Version 2.0 (the "License"); you may   │
+# not use this file except in compliance with the License.                     │
+# You may obtain a copy of the License at                                      │
+#                                                                              │
+#   http://www.apache.org/licenses/LICENSE-2.0                                 │
+#                                                                              │
+# Unless required by applicable law or agreed to in writing, software          │
+# distributed under the License is distributed on an "AS IS" BASIS, WITHOUT    │
+# WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.             │
+# See the License for the specific language governing permissions and          │
+# limitations under the License.                                               │
+#                                                                              │
+# ─────────────────────────────────────────────────────────────────────────────┤
+<% define_locals do
+  variable "mercurial.difftool.name", type: :string?
+  variable "mercurial.difftool.cmd",  type: :string?
+  variable "mercurial.difftool.opts", type: :list?, default: []
+
+  variable "mercurial.mergetool.name", type: :string?
+  variable "mercurial.mergetool.cmd",  type: :string?
+  variable "mercurial.mergetool.opts", type: :list?, default: []
+end -%>
+# ─────────────────────────────────────────────────────────────────────────────┘
 
 [extensions]
-hgext.extdiff =
+  hgext.extdiff =
 
-<% if get_var 'mercurial.difftool' %>
+<% local?("mercurial.difftool.(name|cmd|opts)") do |name, cmd, opts| %>
 [extdiff]
-cmd.<%= get_var! 'mercurial.difftool.name' %> = <%= get_var! 'mercurial.difftool.cmd' %>
-opts.<%= get_var! 'mercurial.difftool.name' %> = <%= get_var 'mercurial.difftool.opts' %>
-<% end %>
+  cmd.<%=  name %> = <%= cmd  %>
+  opts.<%= name %> = <%= opts %>
+<% end -%>
 
 [ui]
-<% if get_var 'mercurial.mergetool' %>
-merge = <%= get_var! 'mercurial.mergetool.name' %>
-<% end %>
+  <% local?("mercurial.mergetool.name") do |name| %>
+  merge = <%= name %>
+  <% end -%>
 
-<% if get_var 'mercurial.mergetool' %>
+<% local?("mercurial.mergetool.(name|cmd|opts)") do |name, cmd, opts| %>
 [merge-tools]
-<%= get_var! 'mercurial.mergetool.name' %>.executable = <%= get_var! 'mercurial.mergetool.cmd' %>
-<%= get_var! 'mercurial.mergetool.name' %>.args = <%= get_var 'mercurial.mergetool.opts' %>
-<% end %>
+  cmd.<%=  name %> = <%= cmd  %>
+  opts.<%= name %> = <%= opts %>
+<% end -%>
+
+# vim: set filetype=eruby.conf :
