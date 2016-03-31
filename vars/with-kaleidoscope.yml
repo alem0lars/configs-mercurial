@@ -7,3 +7,6 @@ mercurial:
     name: Kaleidoscope
     cmd: /usr/local/bin/ksdiff
     opts: --merge --output $output --base $base -- $local $other
+
+features:
+  - kaleidoscope
