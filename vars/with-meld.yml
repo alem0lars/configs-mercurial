@@ -1,0 +1,12 @@
+hg:
+  difftool:
+    name: Meld
+    cmd: meld
+    opts:
+  mergetool:
+    name: Meld
+    cmd: meld
+    opts: $base $local $other
+
+features:
+  - meld
