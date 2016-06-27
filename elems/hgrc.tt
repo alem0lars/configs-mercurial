@@ -48,7 +48,7 @@ end -%>
 [extensions]
   hgext.extdiff =
 
-<% if local? :"difftool_(name|cmd|opts)" %>
+<% if local? :"difftool_name" %>
 [extdiff]
   cmd.<%= local! :difftool_name %> = <%= local! :difftool_cmd %>
   opts.<%= local! :difftool_name %> = <%= local! :difftool_opts %>
@@ -59,7 +59,7 @@ end -%>
   merge = <%= local! :mergetool_name %>
   <% end -%>
 
-<% if local? :"mergetool_(name|cmd|opts)" %>
+<% if local? :"mergetool_name" %>
 [merge-tools]
   cmd.<%= local! :mergetool_name %> = <%= local! :mergetool_cmd %>
   opts.<%= local! :mergetool_name %> = <%= local! :mergetool_opts %>
