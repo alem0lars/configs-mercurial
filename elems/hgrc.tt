@@ -34,13 +34,13 @@
   prefixed(:"hg.difftool.", as: :difftool_) do
     variable :name, type: :string?
     variable :cmd,  type: :string?
-    variable :opts, type: :list?, default: []
+    variable :opts, default: []
   end
 
   prefixed(:"hg.mergetool.", as: :mergetool_) do
     variable :name, type: :string?
     variable :cmd,  type: :string?
-    variable :opts, type: :list?, default: []
+    variable :opts, default: []
   end
 end -%>
 # ─────────────────────────────────────────────────────────────────────────────┘
