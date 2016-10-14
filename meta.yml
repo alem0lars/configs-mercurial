@@ -1,9 +1,8 @@
 elems:
 
-  - src: elems/(hgrc)$
-    dst: ~/.<1>
-    only:
-      features:
-        - hg
+  - src:  elems/(hgrc)$
+    dst:  ~/.<1>
+    only: f?hg
+
 
 # vim: set filetype=eruby.yaml :
