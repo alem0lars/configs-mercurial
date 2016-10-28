@@ -31,17 +31,13 @@
 #                                                                              │
 # ─────────────────────────────────────────────────────────────────────────────┤
 <% define_locals do
-  prefixed(:"hg.difftool.", as: :difftool_) do
-    variable :name, type: :string?
-    variable :cmd,  type: :string?
-    variable :opts, default: []
-  end
+  variable :"hg.difftool.name", type: :string?, as: :difftool_name
+  variable :"hg.difftool.cmd",  type: :string?, as: :difftool_cmd
+  variable :"hg.difftool.opts", default: [],    as: :difftool_opts
 
-  prefixed(:"hg.mergetool.", as: :mergetool_) do
-    variable :name, type: :string?
-    variable :cmd,  type: :string?
-    variable :opts, default: []
-  end
+  variable :"hg.mergetool.name", type: :string?, as: :mergetool_name
+  variable :"hg.mergetool.cmd",  type: :string?, as: :mergetool_cmd
+  variable :"hg.mergetool.opts", default: [],    as: :mergetool_opts
 end -%>
 # ─────────────────────────────────────────────────────────────────────────────┘
 
