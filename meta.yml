@@ -1,6 +1,6 @@
 elems:
 
-  - src:  elems/(hgrc)$
+  - src:  ^(hgrc)$
     dst:  ~/.<1>
     only: f?hg
 
