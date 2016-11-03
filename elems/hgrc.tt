@@ -45,28 +45,25 @@
 end -%>
 # ─────────────────────────────────────────────────────────────────────────────┘
 
-[extensions]
-  hgext.extdiff =
-
 <% if local? :"difftool_name" %>
 [extdiff]
-  cmd.<%= local! :difftool_name %> = <%= local! :difftool_cmd %>
-  <% unless local!(:difftool_opts).empty? %>
-  opts.<%= local! :difftool_name %> = <%= local! :difftool_opts %>
-  <% end -%>
+cmd.<%= local! :difftool_name %> = <%= local! :difftool_cmd %>
+<% unless local!(:difftool_opts).empty? %>
+opts.<%= local! :difftool_name %> = <%= local! :difftool_opts %>
+<% end -%>
 <% end -%>
 
 [ui]
-  <% if local? :mergetool_name %>
-  merge = <%= local! :mergetool_name %>
-  <% end -%>
+<% if local? :mergetool_name %>
+merge = <%= local! :mergetool_name %>
+<% end -%>
 
 <% if local? :"mergetool_name" %>
 [merge-tools]
-  cmd.<%= local! :mergetool_name %> = <%= local! :mergetool_cmd %>
-  <% unless local!(:mergetool_opts).empty? %>
-  opts.<%= local! :mergetool_name %> = <%= local! :mergetool_opts %>
-  <% end -%>
+cmd.<%= local! :mergetool_name %> = <%= local! :mergetool_cmd %>
+<% unless local!(:mergetool_opts).empty? %>
+opts.<%= local! :mergetool_name %> = <%= local! :mergetool_opts %>
+<% end -%>
 <% end -%>
 
 # vim: set filetype=eruby.conf :
